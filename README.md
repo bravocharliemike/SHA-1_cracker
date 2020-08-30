@@ -7,3 +7,6 @@ The function accepts a hash (found during data exfil possibly) and returns the c
 If the hash can't be cracked, the function returns `PASSWORD NOT IN DATABASE`.
 
 Functionality to add: an optional second argument `use_salts` and if set to `True`, each salt string from another file should be appended and prepended to each password hashed at the beginning of the function before hashing.
+
+### Demo from command line
+![Demo](sha-1_cracker_demo.png)
