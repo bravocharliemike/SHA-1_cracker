@@ -1,4 +1,7 @@
 import hashlib
 
-def crack_sha1_hash(hash):
+#def crack_sha1_hash(hash):
     
+"""
+This is a test
+"""
