@@ -1,4 +1,4 @@
-## SHA-1_cracker
+## SHA-1 Cracker
 
 This is a password cracker to figure out passwords that were hashed using SHA-1.
 
