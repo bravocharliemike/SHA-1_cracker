@@ -11,8 +11,9 @@ def crack_sha1_hash(hash: str) -> str:
     should be appended AND prepended to each password from `top-10000-passwords.txt` before hashing and before comparing it to the hash 
     passed into the function.
     """
-   
-    
+
+    # TODO: Add functionality to take a salt string
+
     # Prepare the file for hashing the cleartext passwords
     with open('top-10000-passwords.txt') as fin:
         data = fin.readlines()
