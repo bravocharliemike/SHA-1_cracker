@@ -1,6 +1,6 @@
 import hashlib
 
-def crack_sha1_hash(hash):
+def crack_sha1_hash(hash: str) -> str:
     # Prepare the file for hashing the cleartext passwords
     with open('top-10000-passwords.txt') as fin:
         data = fin.readlines()
