@@ -1,9 +1,19 @@
 import hashlib
+import argparse
 
-def crack_sha1_hash(hash: str) -> str:
+# Initialise parser object to handle command line arguments
+parser = argparse.ArgumentParser(description='Attempts to crack a SHA-1 password hash.')
+parser.add_argument('hash', action='store', help='SHA-1 hash to crack.')
+parser.add_argument('passfile', action='store', help='file with passwords to search.')
+parser.add_argument('--salted', '-s', dest='use_salts', action='store_true', help='set parameter use_salts to True.')
+
+arguments = parser.parse_args()
+
+
+def crack_sha1_hash(hash, use_salts=False):
     """
     The function takes in a SHA-1 hash of a password and returns the password if it is one of the top 10,000 passwords used. 
-    If the SHA-1 hash is NOT of a password in the database, return "PASSWORD NOT IN DATABASE".
+    If the SHA-1 hash is NOT of a password in the database, return "Not found in database".
     
     The function should hash each password from `top-10000-passwords.txt` and compare it to the hash passed into the function.
     
@@ -12,43 +22,44 @@ def crack_sha1_hash(hash: str) -> str:
     passed into the function.
     """
 
-    # TODO: Add functionality to take a salt string
-
     # Prepare the file for hashing the cleartext passwords
-    with open('top-10000-passwords.txt') as fin:
-        data = fin.readlines()
+    with open(arguments.passfile) as fin:
+        passwords = fin.read()
 
-    # Key is clear text password and value its hash digest in hex
-    hash_dict = {}
+    # Key is hex digest and value the clear text password
+    hashed_passwords = dict()
+
     # Loop over the entire file creating single passwords for hashing
-    for line in data:
-        clear_password = line.strip()
-        hashed_pwd = hashlib.sha1(clear_password.encode())
-        hex_format = hashed_pwd.hexdigest()     # Hexadecimal format of SHA-1 hash
-        hash_dict[clear_password] = hex_format
+    for password in passwords.split('\n'):
+        single_pwd = password
+        if use_salts:
+            with open('known-salts.txt') as f:
+                salts = f.read().split()
+                for salt in salts:
+                    for password in passwords.split('\n'):
+                        single_pwd = salt + password + salt
+                        print(single_pwd)
+                        hashed_pwd = hashlib.sha1(single_pwd.encode())
+                        hex_pwd = hashed_pwd.hexdigest()
+                        hashed_passwords[hex_pwd] = password
+
+        hashed_pwd = hashlib.sha1(single_pwd.encode())
+        hex_pwd = hashed_pwd.hexdigest()
+        hashed_passwords[hex_pwd] = single_pwd
 
     # Check if the hash has matching clear text password
-    for k, v in hash_dict.items():
-        if hash == v:
-            return 'The password is ' + k
+    for digest, clear_pwd in hashed_passwords.items():
+        if hash == digest:
+            return f'[+] Cracked: {clear_pwd}'
 
-    return "PASSWORD NOT IN DATABASE"   # The password was not cracked
+    return '[-] Not found in database'   # The password was not cracked
 
 
-# Testing the function
-# Password should crack and equal goldfish
-cracked_password1 = crack_sha1_hash("fbbe7e952d1050bfb09dfdb71d4c2ff2b3d845d2")
-print(cracked_password1)
+def main():
+    cracked = crack_sha1_hash(arguments.hash, arguments.use_salts)
+    print('\nAttempting to crack...\n')
+    print(cracked)
 
-# Password should crack and equal football
-cracked_password2 = crack_sha1_hash("2d27b62c597ec858f6e7b54e7e58525e6a95e6d8")
-print(cracked_password2)
 
-# Password should crack and equal master
-cracked_password3 = crack_sha1_hash("4f26aeafdb2367620a393c973eddbe8f8b846ebd")
-print(cracked_password3)
-
-# Password should not crack but it's equal to ambulancia
-cracked_password4 = crack_sha1_hash("98d58c0a38d8a9aa221ec88cf6514df80d1bf944")
-print(cracked_password4)
-
+if __name__ == '__main__':
+    main()
