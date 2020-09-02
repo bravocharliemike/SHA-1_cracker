@@ -1,12 +1,12 @@
 ## SHA-1 Cracker
 
-This is a password cracker to figure out passwords that were hashed using SHA-1.
+This is a SHA-1 password hash cracker to obtain the clear text of a password hashed with the SHA-1 function.
 
-The function accepts a hash (found during data exfil possibly) and returns the clear text if it's one of the to 10,000 passwords used (the list at the moment only includes `top-10000-passwords.txt` but could be expanded to include larger wordlists like `SecLists` or `rockyou.txt`). 
+The function accepts a hash (found during data exfil possibly) and returns the clear text if it's one of the to 10,000 passwords used. The `passfile` flag can be used to tell the script which of your favourite wordlists to load (if you have `SecLists` or `rockyou.txt`). The files with the script only include the `top-10000-passwords.txt` wordlist. 
 
-If the hash can't be cracked, the function returns `PASSWORD NOT IN DATABASE`.
+If the hash can't be cracked, the script will let you know.
 
-Functionality to add: an optional second argument `use_salts` and if set to `True`, each salt string from another file should be appended and prepended to each password hashed at the beginning of the function before hashing.
+An optional second argument `use_salts` can be set to `True`, and each salt string from another the `known-salts.txt` file will be appended and prepended to each password hashed at the beginning of the function before hashing.
 
 ### Command line help menu
 ![Help](images/sha1_cracker_help.png)
