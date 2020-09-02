@@ -12,13 +12,13 @@ arguments = parser.parse_args()
 
 def crack_sha1_hash(hash, use_salts=False):
     """
-    The function takes in a SHA-1 hash of a password and returns the password if it is one of the top 10,000 passwords used. 
+    The function takes in a SHA-1 hash of a password and returns the password if it is one of the passwords stored in the passfile used. 
     If the SHA-1 hash is NOT of a password in the database, return "Not found in database".
     
-    The function should hash each password from `top-10000-passwords.txt` and compare it to the hash passed into the function.
+    The function hashes each password from the passfile and compare it to the hash passed into the function.
     
-    The function should take an optional second argument named `use_salts`. If set to true, each salt string from the file `known-salts.txt` 
-    should be appended AND prepended to each password from `top-10000-passwords.txt` before hashing and before comparing it to the hash 
+    The function takes an optional second argument named use_salts. If set to true, each salt string from the file `known-salts.txt` 
+    is appended and prepended to each password from the passfile before hashing and before comparing it to the hash 
     passed into the function.
     """
 
