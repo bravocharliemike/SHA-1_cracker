@@ -9,7 +9,7 @@ If the hash can't be cracked, the script will let you know.
 An optional second argument `use_salts` can be set to `True`, and each salt string from the `known-salts.txt` file will be appended and prepended to each password hashed at the beginning of the function before hashing and comparing (Note: it will take a lot longer).
 
 ### Command line help menu
-![Help](images/sha1_cracker_help.png)
+![Help](images/help.png)
 
 ### Command line demo
-![Demo](images/sha1_cracker_demo.png)
+![Demo](images/demo.png)
