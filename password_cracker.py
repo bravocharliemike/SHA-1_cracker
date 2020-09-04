@@ -37,7 +37,7 @@ def crack_sha1_hash(hash, use_salts=False):
                 salts = f.read().split()
                 for salt in salts:
                     for password in passwords.split('\n'):
-                        single_pwd_1 = salt + password + salt
+                        single_pwd = salt + password + salt
                         hashed_pwd = hashlib.sha1(single_pwd.encode())
                         hex_pwd = hashed_pwd.hexdigest()
                         hashed_passwords[hex_pwd] = password
