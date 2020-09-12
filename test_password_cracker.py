@@ -1,4 +1,4 @@
-from password import crack_sha1_hash
+from password_cracker import crack_sha1_hash
 
 
 def test_crack_sha1_hash_1():
