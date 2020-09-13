@@ -1,4 +1,4 @@
-from password_cracker import crack_sha1_hash
+from NEW_CRACKER import crack_sha1_hash
 
 
 def test_crack_sha1_hash_1():
@@ -36,9 +36,16 @@ def test_crack_sha1_hash_salted_2():
     actual = crack_sha1_hash("da5a4e8cf89539e66097acd2f8af128acae2f8ae", use_salts=True)
     assert actual == expected
 
+
 def test_crack_sha1_hash_salted_3():
     expected = '[+] Cracked: bubbles1'
     actual = crack_sha1_hash("ea3f62d498e3b98557f9f9cd0d905028b3b019e1", use_salts=True)
+    assert actual == expected
+
+
+def test_crack_sha1_hash_salted_4():
+    expected = "[-] Not found in database"
+    actual = crack_sha1_hash("a1479ec0dccb3415ab16860ee8e1f770f22b4abe", use_salts=True)
     assert actual == expected
 
 
